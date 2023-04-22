@@ -1,2 +1,5 @@
-# cc-redes-2022.2
-Projeto final da metéria Redes na UFAL
+# Projeto final
+
+Universidade Federal de Alagoas
+Matéria: Redes
+

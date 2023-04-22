@@ -25,18 +25,24 @@ def handle_client(conn, addr):
             if msg == DISCONNECT_MESSAGE:
                 connected = False
 
-            print("f[{addr} {msg}]")
+            print(f"[{addr} {msg}]")
+            conn.send("Msg received".encode(FORMAT))
 
     conn.close()
+    
+
 
 def start():
     server.listen()
-    print(f"[SERVIDOR CONECTADO] Servidor está conectado no IP {SERVER}")
+    print(f"[SERVIDOR CONECTADO] Servidor está conectado {SERVER}")
     while True:
         conn, addr = server.accept()
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
         print(f"[ATIVANDO CONECÇÕES] {threading.active_count() - 1}")
+        
+
 
 print("[STARTING] servidor esta iniciando...")
 start()
+print("[ENDING] servidor esta finalizando...")
