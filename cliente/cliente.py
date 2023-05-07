@@ -5,8 +5,8 @@ import socket
 HEADER = 2048
 PORT = 12000
 FORMAT = 'utf-8'
-SERVER = "192.168.0.11"
-DISCONNECT_MESSAGE = "!DISCONNECT"
+SERVER = ""
+DISCONNECT_MESSAGE = "!EXIT"
 ADDR = (SERVER, PORT)
 print(ADDR)
 
@@ -20,11 +20,39 @@ def send(msg):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
-    print(client.recv(HEADER).decode(FORMAT))
+
+def get():
+    return client.recv(HEADER).decode(FORMAT) 
+
+def controller(msg):
+    try:
+        send(msg)
+        res = get()
+
+        if msg == DISCONNECT_MESSAGE:
+            exit()
+            print(res)
+            return True
+
+        if res == "Digite um número: ":
+            num = input(res)
+            send(num)
+            print(get())
+        else:
+            print(res)
+    except:
+        print("Servidor indisponivel, fechando conexão!")
+        client.close();
+        return True
+
+        return False
+
+def exit():
+    client.close()
+    return
+
 
 while True:
-    msg = input("Digite !DISCONNECT para finalizar thread: ")
-    if msg == DISCONNECT_MESSAGE:
+    msg = input(f"Digite {DISCONNECT_MESSAGE} para finalizar a conexão: ")
+    if controller(msg):
         break
-    
-    send(msg)
