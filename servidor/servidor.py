@@ -19,6 +19,20 @@ def fat (num):
     
     return num * fat (num - 1)
 
+def is_prime (num):
+    i = 1
+    prime = 1
+
+    while i <= num ** 1/2:
+        if num % i == 0:
+            prime += 1
+        i += 1
+
+    if (prime == 2):
+        return True
+    else:
+        return False
+
 def get(conn):
     msg_length = conn.recv(HEADER).decode(FORMAT)
     if msg_length:
@@ -54,9 +68,36 @@ def handle_client(conn, addr):
                     send(conn, f"Digite um número maior que ou igual a 0")
             except:
                 send(conn, "Você não digitou um número!");
+        elif msg.lower() == "primo":
+            send(conn, "Digite um número: ")
+            msg = get(conn)
+            print(f"[{addr} primo:{msg}]")
+            try:
+                msg = int(msg)
+                if msg >= 2:
+                    if is_prime(msg):
+                        send(conn, f"{msg} é primo!")
+                    else:
+                        send(conn, f"{msg} não é primo!")
+                else:
+                    send(conn, f"Digite um número maior que ou igual a 2!")
+            except:
+                send(conn, "Você não digitou um número!");
+        elif msg.lower() == "par":
+            send(conn, "Digite um número: ")
+            msg = get(conn)
+            print(f"[{addr} par:{msg}]")
+            try:
+                msg = int(msg)
+                if msg % 2 == 0:
+                        send(conn, f"{msg} é número par!")
+                else:
+                    send(conn, f"{msg} é número ímpar!")
+            except:
+                send(conn, "Você não digitou um número!");
         elif msg == DISCONNECT_MESSAGE:
             connected = False
-            print(f"[DESCONECTANDO] {addr}")
+            print(f"[DESCONECTANDO] {addr}.")
             send(conn, "Desconectando...");
             conn.close()
             return
@@ -71,7 +112,7 @@ def start():
         conn, addr = server.accept()
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
-        print(f"[THREADS ATIVAS] {threading.active_count() - 1}")
+        print(f"[THREADS ATIVAS] Usuários conectados: {threading.active_count() - 1}")
 
 print("[STARTING] servidor esta iniciando...")
 start()
