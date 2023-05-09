@@ -97,7 +97,8 @@ def handle_client(conn, addr):
                 send(conn, "Você não digitou um número!");
         elif msg == DISCONNECT_MESSAGE:
             connected = False
-            print(f"[DESCONECTANDO] {addr}.")
+            print(f"[DESCONECTADO] {addr}.")
+            print(f"[THREADS ATIVAS] Usuários conectados: {threading.active_count() - 2}")
             send(conn, "Desconectando...");
             conn.close()
             return
