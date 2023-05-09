@@ -115,5 +115,5 @@ def start():
         thread.start()
         print(f"[THREADS ATIVAS] Usuários conectados: {threading.active_count() - 1}")
 
-print("[STARTING] servidor esta iniciando...")
+print("[STARTING] servidor está iniciando...")
 start()

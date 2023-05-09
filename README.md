@@ -4,6 +4,12 @@ Universidade Federal de Alagoas
 
 Matéria: Redes
 
+Para executar esse projeto é preciso que as máquinas tenham python instalado, além de estar conectados em uma mesma rede local,
+além disso, o sistema operacional deve liberar a porta para que ambos se conectem!
+
+
+
+##PASSO A PASSO
 
 1º PASSO: Execute o arquivo servidor.py, dentro da pasta servidor.
 
